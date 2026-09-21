@@ -18,3 +18,4 @@ The page only showed numbers and dots, which felt abstract for gems, so I asked 
 The icon did not match what RI and SG actually mean, so I asked Codex to make higher RI brighten the gem's facets and higher SG tilt a balance scale, without changing the gem's size.
 
 5th prompt:
+The chart did not show where the model switches its answer, so I asked Codex to shade the background blue for Diamond and pink for Crystal to reveal the decision boundary.
