@@ -9,8 +9,8 @@
 <main>
 <header><div class="eyebrow">✦ A tiny machine learning playground</div><h1>Gem Classifier</h1><p>Diamond or Crystal? Give your gem two numbers and follow the dots to discover how a tiny model makes its guess.</p></header>
 <div class="grid"><section class="card"><h2>1. Meet your mystery gem</h2>
-<label for="ri">Refractive index (RI) · 1.50–2.50</label><div class="hint">How much the gem bends light. Inputs are rounded to three decimal places.</div><input id="ri" type="number" min="1.400" max="2.800" step="0.001" value="2.420">
-<label for="sg">Specific gravity (SG) · 2.60–3.60</label><div class="hint">Density compared with water; SG has no units.</div><input id="sg" type="number" min="2.200" max="6.100" step="0.001" value="3.520">
+<label for="ri">Refractive index (RI) &middot; 1.400&ndash;2.800</label><div class="hint">How much the gem bends light. Inputs are rounded to three decimal places.</div><input id="ri" type="number" min="1.400" max="2.800" step="0.001" value="2.420">
+<label for="sg">Specific gravity (SG) &middot; 2.20&ndash;6.10</label><div class="hint">Density compared with water; SG has no units.</div><input id="sg" type="number" min="2.20" max="6.10" step="0.001" value="3.520">
 <button class="secondary" id="diamond">Try a diamond</button><button class="secondary" id="crystal">Try a crystal</button>
 <div id="prediction" class="result" aria-live="polite" aria-atomic="true"></div>
 <h2>2. You’re the teacher</h2><p class="hint">Label your inputs however you like and add a training example. The model learns from your choice—even if you trick it!</p><label for="label">My label</label><select id="label"><option>Diamond</option><option>Crystal</option></select> <button id="add">Add labeled gem</button><p id="notice" class="hint" role="status"></p>
@@ -58,7 +58,7 @@ gems.forEach((g,i)=>{const dot=el('circle',{cx:x(g.ri),cy:y(g.sg),r:6,fill:color
 labels.forEach(label=>{const c=means[label];if(c)el('path',{d:`M ${x(c.ri)-9} ${y(c.sg)} h 18 M ${x(c.ri)} ${y(c.sg)-9} v 18`,stroke:colors[label],'stroke-width':3});});
 if(point)el('circle',{cx:x(point.ri),cy:y(point.sg),r:12,fill:'none',stroke:'#ba6500','stroke-width':3});}
 function update(){const point=current(),means=centers();$('add').disabled=!point;draw(point,means);
-if(!point){$('prediction').innerHTML='<h2>Check your numbers</h2><p>Enter RI from 1.400 to 2.800 and SG from 2.200 to 6.100. Both fields need a number.</p>';return;}
+if(!point){$('prediction').innerHTML='<h2>Check your numbers</h2><p>Enter RI from 1.400 to 2.800 and SG from 2.20 to 6.10. Both fields need a number.</p>';return;}
 if(labels.some(label=>!means[label])){$('prediction').innerHTML='<h2>One group is missing</h2><p>Add or relabel a gem so each group has at least one example.</p>';return;}
 const d=distance(point,means.Diamond),c=distance(point,means.Crystal),tie=Math.abs(d-c)<1e-10,winner=d<c?'Diamond':'Crystal';
 $('prediction').innerHTML=`<div class="eyebrow">Model prediction</div><h2>${tie?'Too close to call':winner}</h2><p>${tie?'Your gem is equally distant from both averages.':`Your gem is closer to the <strong>${winner}</strong> group average.`}</p><div class="distances">${labels.map(label=>`<div class="distance">${label} scaled distance<strong>${distance(point,means[label]).toFixed(3)}</strong>Average RI (raw): ${means[label].ri.toFixed(3)}<br>Average SG (raw): ${means[label].sg.toFixed(3)}</div>`).join('')}</div><p class="hint">Smaller distance = closer match. Displayed numbers are rounded; calculations use full precision.</p>`;}
