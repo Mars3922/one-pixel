@@ -5,6 +5,7 @@
 <title>Gem Classifier</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#f5f1fc;color:#292039;font:16px/1.6 system-ui,sans-serif}main{max-width:1080px;margin:auto;padding:32px 20px}h1{font-size:clamp(2.5rem,7vw,4rem);line-height:1.1;margin:12px 0}h2{font-size:1.3rem;margin:0 0 12px}p{margin:10px 0 18px}.eyebrow{color:#705292;font-size:.8rem;text-transform:uppercase;letter-spacing:.15em;font-weight:800}.grid{display:grid;grid-template-columns:1fr 1.2fr;gap:20px}.card{background:white;border:1px solid #ded4ed;border-radius:22px;padding:24px;margin:20px 0;box-shadow:0 8px 25px #49327408}.hint{font-size:.88rem;color:#665973}label{display:block;font-weight:650}input,select,button{font:inherit}input{width:100%;border:1px solid #9785ac;border-radius:10px;padding:10px;margin:6px 0 16px}button{background:#6840ad;color:white;border:0;border-radius:10px;padding:10px 14px;cursor:pointer;margin:4px 4px 4px 0}button.secondary{background:#eee5fa;color:#543383}button:disabled{opacity:.45;cursor:not-allowed}select{padding:7px;border:1px solid #ae9fc0;border-radius:8px;background:white}:focus-visible{outline:3px solid #b97200;outline-offset:3px}.result{background:#f0e8fc;padding:18px;border-radius:14px;margin:18px 0}.result h2{font-size:1.9rem}.distances{display:flex;gap:10px}.distance{background:white;border-radius:10px;padding:10px;flex:1;font-size:.85rem}.distance strong{display:block;font-size:1.4rem}svg{width:100%;height:auto;display:block}svg text{font:13px system-ui;fill:#584764}.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.85rem}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px 5px;border-bottom:1px solid #ece4f4}.lesson{background:#fff9e9}a{color:#6840ad}footer{color:#665973;font-size:.85rem}@media(max-width:760px){.grid{grid-template-columns:1fr;gap:0}.card{padding:18px;margin:12px 0}main{padding:24px 14px}table{font-size:.85rem}}
+.gem-preview{margin:16px 0;padding:16px;border-radius:16px;background:#211b38;color:#fff;text-align:center}.gem-preview svg{width:180px;max-width:100%;margin:auto;overflow:visible}.gem-shape path{transition:fill .2s}.facet-light{fill:var(--facet-light,#ece4ff)}.facet-mid{fill:var(--facet-mid,#b49be8)}.facet-dark{fill:var(--facet-dark,#6542ae)}.facet-highlight{opacity:var(--highlight,.5)}.gem-preview p{margin:4px 0;font-size:.85rem;color:#ece4ff}.gem-preview.invalid svg{opacity:.25}@media(prefers-reduced-motion:reduce){.gem-shape path{transition:none}}
 </style>
 <main>
 <header><div class="eyebrow">✦ A tiny machine learning playground</div><h1>Gem Classifier</h1><p>Diamond or Crystal? Give your gem two numbers and follow the dots to discover how a tiny model makes its guess.</p></header>
@@ -12,6 +13,18 @@
 <label for="ri">Refractive index (RI) &middot; 1.400&ndash;2.800</label><div class="hint">How much the gem bends light. Inputs are rounded to three decimal places.</div><input id="ri" type="number" min="1.400" max="2.800" step="0.001" value="2.420">
 <label for="sg">Specific gravity (SG) &middot; 2.20&ndash;6.10</label><div class="hint">Density compared with water; SG has no units.</div><input id="sg" type="number" min="2.20" max="6.10" step="0.001" value="3.520">
 <button class="secondary" id="diamond">Try a diamond</button><button class="secondary" id="crystal">Try a crystal</button>
+<div id="gem-preview" class="gem-preview">
+
+<svg viewBox="0 0 240 165" style="width:260px" role="img" aria-labelledby="balance-title"><title id="balance-title">Density balance: gem on the left and reference weight on the right</title>
+<path d="M120 48V135M88 138H152" fill="none" stroke="#b9a8d8" stroke-width="6" stroke-linecap="round"/>
+<g id="balance-beam"><path d="M43 48H197" stroke="#efe7ff" stroke-width="4" stroke-linecap="round"/></g>
+<g id="gem-pan"><path d="M43 48 18 99H68Z" fill="none" stroke="#b9a8d8" stroke-width="2"/><path d="M18 99Q43 116 68 99" fill="#715591"/>
+<g class="gem-shape" stroke="#e7ddff" stroke-width="1"><path d="M28 84 35 75H51L58 84 43 99Z" class="facet-mid"/><path d="M35 75H51L48 84H38Z" class="facet-light"/><path d="M38 84H48L43 99Z" class="facet-light"/><path d="M48 84H58L43 99Z" class="facet-dark"/></g></g>
+<g id="weight-pan"><path d="M197 48 172 99H222Z" fill="none" stroke="#b9a8d8" stroke-width="2"/><path d="M172 99Q197 116 222 99" fill="#715591"/><path d="M184 96 188 79H206L210 96Z" fill="#ead3a3" stroke="#fff0cc"/><circle cx="197" cy="77" r="4" fill="none" stroke="#ead3a3" stroke-width="3"/></g>
+<circle cx="120" cy="48" r="5" fill="#fff0cc"/>
+<text x="43" y="159" text-anchor="middle" style="fill:#ece4ff">Gem</text><text x="197" y="159" text-anchor="middle" style="fill:#ece4ff">Fixed weight</text>
+</svg><p id="gem-caption"></p><p>Higher RI brightens highlights and deepens facet contrast. Gem size stays fixed. Higher SG means more mass at the same volume, lowering the gem side of the balance. The reference weight balances at SG 4.150. This is a concept illustration, not a calibrated scale.</p>
+</div>
 <div id="prediction" class="result" aria-live="polite" aria-atomic="true"></div>
 <h2>2. You’re the teacher</h2><p class="hint">Label your inputs however you like and add a training example. The model learns from your choice—even if you trick it!</p><label for="label">My label</label><select id="label"><option>Diamond</option><option>Crystal</option></select> <button id="add">Add labeled gem</button><p id="notice" class="hint" role="status"></p>
 </section><section class="card"><h2>Follow the gem trail</h2><p class="hint">Dots are examples. + marks each group average. The orange ring is your gem; dashed lines show scaled distances to the averages. Each axis spans the full input range, so the plot uses the same scaling as the model. Nearby examples may overlap; all values are listed below.</p><svg id="chart" viewBox="0 0 520 490" role="img" aria-label="Gem chart with refractive index horizontally and specific gravity vertically"></svg><div class="legend"><span style="color:#007c88">● Diamond</span><span style="color:#a03a85">● Crystal</span><span>◎ Your gem</span><span>+ Average</span></div></section></div>
@@ -57,7 +70,22 @@ labels.forEach(label=>{const c=means[label];if(c&&point)el('line',{x1:x(point.ri
 gems.forEach((g,i)=>{const dot=el('circle',{cx:x(g.ri),cy:y(g.sg),r:6,fill:colors[g.label],stroke:'white'});const title=document.createElementNS(svg.namespaceURI,'title');title.textContent=`Gem ${i+1}: ${g.label}, RI ${g.ri.toFixed(3)}, SG ${g.sg.toFixed(3)}`;dot.append(title);});
 labels.forEach(label=>{const c=means[label];if(c)el('path',{d:`M ${x(c.ri)-9} ${y(c.sg)} h 18 M ${x(c.ri)} ${y(c.sg)-9} v 18`,stroke:colors[label],'stroke-width':3});});
 if(point)el('circle',{cx:x(point.ri),cy:y(point.sg),r:12,fill:'none',stroke:'#ba6500','stroke-width':3});}
-function update(){const point=current(),means=centers();$('add').disabled=!point;draw(point,means);
+function updateGem(point){
+ const preview=$('gem-preview');preview.classList.toggle('invalid',!point);
+ if(!point){$('gem-caption').textContent='Enter valid RI and SG values to update the gem and balance.';$('balance-title').textContent='Balance paused: enter valid inputs';return;}
+ const ri=(point.ri-1.4)/1.4,sg=(point.sg-2.2)/3.9;
+ preview.style.setProperty('--facet-light',`hsl(260 80% ${65+34*ri}%)`);
+ preview.style.setProperty('--facet-mid',`hsl(260 65% ${53+24*ri}%)`);
+ preview.style.setProperty('--facet-dark',`hsl(260 50% ${46-19*ri}%)`);
+ preview.style.setProperty('--highlight',(.08+.9*ri).toFixed(3));
+ const angle=18-36*sg,radians=angle*Math.PI/180,dx=77*Math.cos(radians),dy=77*Math.sin(radians);
+ $('balance-beam').setAttribute('transform',`rotate(${angle} 120 48)`);
+ $('gem-pan').setAttribute('transform',`translate(${77-dx} ${-dy})`);
+ $('weight-pan').setAttribute('transform',`translate(${dx-77} ${dy})`);
+ const description=`RI ${point.ri.toFixed(3)}: ${ri<.33?'soft':ri<.67?'bright':'brilliant'} facet highlights. SG ${point.sg.toFixed(3)}: ${Math.abs(angle)<.001?'balanced':angle<0?'gem side lower':'weight side lower'}.`;
+ $('gem-caption').textContent=description;$('balance-title').textContent=description;
+}
+function update(){const point=current(),means=centers();$('add').disabled=!point;draw(point,means);updateGem(point);
 if(!point){$('prediction').innerHTML='<h2>Check your numbers</h2><p>Enter RI from 1.400 to 2.800 and SG from 2.20 to 6.10. Both fields need a number.</p>';return;}
 if(labels.some(label=>!means[label])){$('prediction').innerHTML='<h2>One group is missing</h2><p>Add or relabel a gem so each group has at least one example.</p>';return;}
 const d=distance(point,means.Diamond),c=distance(point,means.Crystal),tie=Math.abs(d-c)<1e-10,winner=d<c?'Diamond':'Crystal';

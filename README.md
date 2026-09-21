@@ -10,4 +10,11 @@ Also want the website to be capable of telling people what is a diamond.
 I found that the ranges were set too narrow, so I asked Codex to widen them and scale both features.
 A few more examples are added to the starter gems.
 
+3rd prompt:
+Update the input labels since they didn't change along with the ranges.
 
+4th prompt:
+The page only showed numbers and dots, which felt abstract for gems, so I asked Codex to draw a gem icon to make the input more direct.
+The icon did not match what RI and SG actually mean, so I asked Codex to make higher RI brighten the gem's facets and higher SG tilt a balance scale, without changing the gem's size.
+
+5th prompt:
