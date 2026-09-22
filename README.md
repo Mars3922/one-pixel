@@ -19,3 +19,4 @@ The icon did not match what RI and SG actually mean, so I asked Codex to make hi
 
 5th prompt:
 The chart did not show where the model switches its answer, so I asked Codex to shade the background blue for Diamond and pink for Crystal to reveal the decision boundary.
+
