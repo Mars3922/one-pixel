@@ -1,5 +1,29 @@
 # Gem Classifier
 
+## Purpose
+
+Gem Classifier is a small, playful machine learning page that predicts **Diamond** or **Quartz** from two gem properties: refractive index (RI), which describes how much light bends, and specific gravity (SG), which describes density compared with water. It helps visitors explore how labeled examples influence a model's answer.
+
+## Open and use the page
+
+Open the [Gem Classifier on GitHub Pages](https://mars3922.github.io/one-pixel/gem-classifier.html), or double-click `gem-classifier.html` to open the local file in a browser. No installation, API keys, or build step is needed; the local page also works offline.
+
+1. Type values or drag the sliders: **RI 1.400-2.800** and **SG 2.20-6.10**, with steps of 0.001.
+2. Watch the prediction, distances, chart, and gem illustration update. Higher RI brightens the gem's facets; higher SG lowers its side of the balance.
+3. Compare your gem with the example dots. Blue areas predict Diamond; pink areas predict Quartz. Their shared edge shows where the prediction changes.
+4. Try the preset buttons, change an example's label, or choose your own label and click **Add labeled gem** to see how teaching the model changes its answer.
+5. Open the expandable explanations to learn more. Use **Reset to starter gems** to start over. Your experiments are not saved when you reload the page.
+
+## How it makes a prediction
+
+The model learns from 20 labeled starter gems. It scales RI and SG to the same 0-1 range so SG's larger numeric range does not dominate the comparison. It then finds the average position of each group and measures how far your gem is from those two averages.
+
+The closer group becomes the prediction: Diamond or Quartz. The displayed distances explain the choice; a smaller distance means a closer match, not a confidence percentage. Changing the examples or their labels updates the averages and the chart's decision boundary. Equally close groups produce a tie, and the model needs at least one example of each label to compare them.
+
+## A limitation I discovered
+
+The model can only choose Diamond or Quartz; it has no label for other materials. When I tried moissanite, a diamond simulant, it was predicted as Diamond because the model forced it into one of the two available labels. A close match to the Diamond examples is not proof that a gem is a diamond.
+
 ## Development Log
 
 1st prompt:
