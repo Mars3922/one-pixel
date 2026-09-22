@@ -21,10 +21,10 @@ The icon did not match what RI and SG actually mean, so I asked Codex to make hi
 The chart did not show where the model switches its answer, so I asked Codex to shade the background blue for Diamond and pink for Crystal to reveal the decision boundary.
 
 6th prompt:
-The gemologist classmate pointed out that "Crystal" was ambiguous, and what I meant was quartz, so I asked Codex to rename the label to "Quartz" and remove the confusing note.
+A gemologist classmate pointed out that "Crystal" was ambiguous, and what I meant was quartz, so I asked Codex to rename the label to "Quartz" and remove the confusing note.
 
 7th prompt:
-I showed the page to two classmates: a gemologist understood it quickly, but another classmate found it hard to follow, so I asked Codex to simplify the page by enlarging the gem icon, shrinking the explanation text, and collapsing the long sections.
+I showed the page to two classmates: the gemologist understood it quickly, but another classmate found it hard to follow, so I asked Codex to simplify the page by enlarging the gem icon, shrinking the explanation text, and collapsing the long sections.
 
 8th prompt:
 Typing exact numbers was the only way to change the inputs, so I asked Codex to add a slider next to each input that stays in sync with the number box and updates the prediction live.
